@@ -1,0 +1,7 @@
+"smashmod"
+{
+	"base"			"base"
+	"title"			"Smash Mod"
+	"category"		"pvp"
+	"menusystem"	"1"
+}
