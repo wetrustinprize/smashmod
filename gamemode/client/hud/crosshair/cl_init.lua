@@ -30,7 +30,8 @@ function DrawCrosshair()
             h / 2, 
             wep:GetMaxClip1(), 
             wep:GetMaxClip1() - wep:Clip1() + 1, 
-            20
+            20,
+            2
         )
     end
 end
