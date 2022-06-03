@@ -7,6 +7,8 @@ local hide = {
     ["CHudHealth"] = true,
     ["CHudBattery"] = true,
     ["CHudCrosshair"] = true,
+    ["CHudSecondaryAmmo"] = true,
+    ["CHudAmmo"] = true,
 }
 
 -- Hide default Garry's Mod hud
