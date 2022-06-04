@@ -84,7 +84,7 @@ function HealthHUD:Draw(xOffset, yOffset)
     -- Draw damage big text
     local bigDamageWidth, bigDamageHeight = DrawAnimatedText(
         self.__damageAnimSpeed, self.__damageAnimDeslocation * self.__damageAnimPercentage, 5, 
-        damage, 
+        string.format("%0.0f", damage),
         "HealthFont", 
         xOffset, yOffset, 
         Color(255, 255, 255, 255 * transparency), 
@@ -95,8 +95,8 @@ function HealthHUD:Draw(xOffset, yOffset)
     -- Draw damage small text
     local smallDamageWidth, _ = DrawAnimatedText(
         self.__damageAnimSpeed, self.__damageAnimDeslocation * self.__damageAnimPercentage, 5, 
-        ".00%", 
-        "HealthFontSmall", 
+        "." .. string.Right(string.format("%0.2f", damage%1), 2) .. "%",
+        "HealthFontSmall",
         xOffset + bigDamageWidth, yOffset + bigDamageHeight, 
         Color(255, 255, 255, 255 * transparency), 
         TEXT_ALIGN_LEFT, TEXT_ALIGN_BOTTOM, 
