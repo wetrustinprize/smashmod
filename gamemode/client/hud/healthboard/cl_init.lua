@@ -3,10 +3,8 @@ include("cl_minimalhealthhud.lua")
 
 -- Variables
 local huds = {}
-local minimalHuds = {
-    [LocalPlayer()] = MinimalHealthHUD(LocalPlayer())
-}
-local playerHud = HealthHUD(LocalPlayer())
+local minimalHuds = {}
+local playerHud = nil
 
 local function updateMinimalHuds()
     -- Check if should create a new HUD
@@ -44,12 +42,21 @@ local function updateHuds(players)
         if not table.HasValue(players, ply) then
             huds[ply]:Hide()
         end
+
+        if not table.HasValue(player.GetAll(), ply) then
+            table.RemoveByValue(huds, hud)
+        end
     end
+
 end
 
 -- Draws the player hud
 function DrawPlayerHud()
     local scrH = ScrH()
+
+    if not playerHud then
+        playerHud = HealthHUD(LocalPlayer())
+    end
 
     playerHud:Draw(50, scrH - 150)
 end
