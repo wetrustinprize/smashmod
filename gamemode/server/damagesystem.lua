@@ -140,6 +140,5 @@ hook.Add("PostPlayerDeath", "ResetDeathSmashBros", function(ply)
 end)
 
 hook.Add("PlayerSpawn", "PlayerSpawnSmashBros", function(ply)
-    ply:SetNWFloat("smod_damage", 0)
     ply:SetNWBool("shoulddie", false)
 end)
