@@ -1,4 +1,4 @@
-include("./shared/sh_utils.lua")
+include("shared/sh_utils.lua")
 
 GM.Name = "Smash Mod"
 GM.Author = "Prize"

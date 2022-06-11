@@ -10,6 +10,10 @@ local function IncludeCSDir(dir)
         if string.Left(v, 3) == "cl_" then
             AddCSLuaFile(dir .. v)
         end
+
+        if string.Left(v, 3) == "sh_" then
+            AddCSLuaFile(dir .. v)
+        end
     end
 
     for k, v in ipairs(Directory) do
@@ -18,5 +22,8 @@ local function IncludeCSDir(dir)
 end
 
 IncludeCSDir("client")
+IncludeCSDir("shared")
+
 -- Includes
 include("server/damagesystem.lua")
+include("server/buildsystem/sv_init.lua")
