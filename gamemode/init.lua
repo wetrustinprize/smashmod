@@ -8,13 +8,11 @@ local function IncludeCSDir(dir)
 
     for k, v in ipairs(File) do
         if string.Left(v, 3) == "cl_" then
-            print("[SMASH CLIENT AUTOLOAD] Client file: " .. v)
             AddCSLuaFile(dir .. v)
         end
     end
 
     for k, v in ipairs(Directory) do
-        print("[SMASH CLIENT AUTOLOAD] Directory: " .. v)
         IncludeCSDir(dir .. v)
     end
 end
