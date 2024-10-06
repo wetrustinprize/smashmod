@@ -3,19 +3,35 @@ Builds.__index = Builds
 
 local defaultBuilds = {
     {
-        name = "Gordon",
-        description = "Gordon's build",
+        name = "Hellvolver",
+        model = "models/player/monk.mdl",
         initialDamage = 0,
         weapons = {
-            "weapon_crowbar",
+            "sfw_corruptor",
         },
     },
     {
-        name = "Sniper",
-        description = "Sniper's build",
+        name = "Goobber",
+        model = "models/player/soldier_stripped.mdl",
         initialDamage = 100,
         weapons = {
-            "weapon_crossbow",
+            "sfw_acidrain",
+        },
+    },
+    {
+        name = "Froozen",
+        model = "models/player/mossman_arctic.mdl",
+        initialDamage = 200,
+        weapons = {
+            "sfw_jotunn",
+        },
+    },
+    {
+        name = "Brawler",
+        model = "models/player/p2_chell.mdl",
+        initialDamage = 0,
+        weapons = {
+            "sfw_phasma",
         },
     }
 }
@@ -24,7 +40,7 @@ if file.Exists("smashmod_loadouts.json", "DATA") then
     local loadedBuilds = util.JSONToTable(file.Read("smashmod_Builds.json", "DATA"))
     if type(loadedBuilds) == "table" then
         Builds.loadouts = loadedBuilds
-    else 
+    else
         Builds.loadouts = defaultBuilds
     end
 else
@@ -33,6 +49,5 @@ end
 
 -- Gets a random build
 function Builds:GetRandom()
-    local build = table.Random(self.loadouts)
-    return build
+    return table.Random(self.loadouts)
 end
