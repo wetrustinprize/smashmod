@@ -1,0 +1,1 @@
+resource.AddFile("sound/smod/smash.mp3");

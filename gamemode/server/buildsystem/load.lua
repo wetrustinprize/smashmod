@@ -3,35 +3,42 @@ Builds.__index = Builds
 
 local defaultBuilds = {
     {
-        name = "Hellvolver",
+        name = "Corruptor",
         model = "models/player/monk.mdl",
-        initialDamage = 0,
         weapons = {
             "sfw_corruptor",
         },
     },
     {
-        name = "Goobber",
-        model = "models/player/soldier_stripped.mdl",
-        initialDamage = 100,
+        name = "Meteor",
+        model = "models/player/combine_soldier_prisonguard.mdl",
+        initialDamage = 200,
         weapons = {
-            "sfw_acidrain",
+            "sfw_meteor",
         },
     },
     {
-        name = "Froozen",
+        name = "Jotunn",
         model = "models/player/mossman_arctic.mdl",
-        initialDamage = 200,
         weapons = {
             "sfw_jotunn",
         },
     },
     {
-        name = "Brawler",
-        model = "models/player/p2_chell.mdl",
-        initialDamage = 0,
+        name = "Ember",
+        model = "models/player/soldier_stripped.mdl",
+        initialDamage = 200,
         weapons = {
-            "sfw_phasma",
+            "sfw_ember"
+        }
+    },
+    {
+        name = "Eblade",
+        model = "models/player/p2_chell.mdl",
+        damageReduction = 0.5,
+        speedMultiplier = 1.5,
+        weapons = {
+            "sfw_eblade",
         },
     }
 }

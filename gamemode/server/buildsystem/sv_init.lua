@@ -12,7 +12,21 @@ hook.Add("PlayerSpawn", "GiveBuild", function(ply)
     local build, key = Builds:GetRandom()
     ply:SetModel(build.model)
     ply:SetNWString("smod_build", key)
-    ply:SetNWFloat("smod_damage", build.initialDamage)
+
+    ply:SetNWFloat(
+        "smod_speed",
+        build.speedMultiplier != nul and build.speedMultiplier or 1
+    )
+
+    ply:SetNWFloat(
+        "smod_damageReduction",
+        build.damageReduction != nul and build.damageReduction or 0
+    )
+
+    ply:SetNWFloat(
+        "smod_damage",
+        build.initialDamage != nul and build.initialDamage or 0
+    )
 
     for _, weapon in pairs(build.weapons) do
         ply:Give(weapon)

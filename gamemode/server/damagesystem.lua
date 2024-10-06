@@ -4,7 +4,7 @@ CreateConVar("smod_killatpercent", 1000, FCVAR_ARCHIVE, "Kill anything at this p
 CreateConVar("smod_knockback", 1, FCVAR_ARCHIVE, "Knockback Multiplier. 0 means disabled", 0, 100)
 
 function DoExplosion(pos, ent)
-    ent:EmitSound("NPC_CombineBall.Explosion")
+    ent:EmitSound("smod/smash.mp3")
     util.ScreenShake(pos, 20, 150, 1, 1250)
     local data = EffectData()
     data:SetOrigin(pos)
