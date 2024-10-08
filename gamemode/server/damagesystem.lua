@@ -4,7 +4,7 @@ CreateConVar("smod_killatpercent", 1000, FCVAR_ARCHIVE, "Kill anything at this p
 CreateConVar("smod_knockback", 1, FCVAR_ARCHIVE, "Knockback Multiplier. 0 means disabled", 0, 100)
 
 function DoExplosion(pos, ent)
-    ent:EmitSound("smod/smash.mp3")
+    ent:EmitSound("smashmod/smash.wav")
     util.ScreenShake(pos, 20, 150, 1, 1250)
     local data = EffectData()
     data:SetOrigin(pos)
@@ -35,15 +35,15 @@ local function Damage(target, info)
             local damage = info:GetDamage()
 
             if damage >= 0.00 and damage < 25.00 then
-                target:EmitSound("hit/s.wav", 75, math.random(85, 115))
+                target:EmitSound("smashmod/hit/s.mp3", 75, math.random(85, 115))
             end
 
             if damage >= 25.00 and damage < 50.00 then
-                target:EmitSound("hit/m.wav", 75, math.random(85, 115))
+                target:EmitSound("smashmod/hit/m.mp3", 75, math.random(85, 115))
             end
 
             if damage >= 50.00 then
-                target:EmitSound("hit/l.wav", 75, math.random(85, 115))
+                target:EmitSound("smashmod/hit/l.mp3", 75, math.random(85, 115))
             end
         end
 
