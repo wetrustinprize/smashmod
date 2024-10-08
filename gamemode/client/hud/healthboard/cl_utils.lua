@@ -1,5 +1,14 @@
 ANIMATION_SPIN = 0
 
+function lerpColor(color1, color2, amount)
+    return Color(
+        color1.r + (color2.r - color1.r) * amount,
+        color1.g + (color2.g - color1.g) * amount,
+        color1.b + (color2.b - color1.b) * amount,
+        color1.a + (color2.a - color1.a) * amount
+    )
+end
+
 function DrawAnimatedText(animationSpeed, animationDeslocation, animationDelay, text, font, x, y, color, xAlign, yAlign, outlinedWidth, outlinedColor)
     -- Default variables
     local text = tostring(text)

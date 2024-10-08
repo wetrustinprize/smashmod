@@ -1,0 +1,2 @@
+CreateConVar("smod_killatpercent", 1000, {FCVAR_ARCHIVE, FCVAR_REPLICATED}, "Kill anything at this percentage or higher. 0 means disabled", 0)
+CreateConVar("smod_knockback", 1, {FCVAR_ARCHIVE, FCVAR_REPLICATED}, "Knockback Multiplier. 0 means disabled", 0, 100)

@@ -25,5 +25,7 @@ IncludeCSDir("client")
 IncludeCSDir("shared")
 
 -- Includes
+include("server/resources.lua")
+include("server/network.lua")
 include("server/damagesystem.lua")
 include("server/buildsystem/sv_init.lua")

@@ -1,7 +1,6 @@
 -- https://steamcommunity.com/sharedfiles/filedetails/?id=2809055293
 -- Created by: Your Local Birb
-CreateConVar("smod_killatpercent", 1000, FCVAR_ARCHIVE, "Kill anything at this percentage or higher. 0 means disabled", 0)
-CreateConVar("smod_knockback", 1, FCVAR_ARCHIVE, "Knockback Multiplier. 0 means disabled", 0, 100)
+
 
 function DoExplosion(pos, ent)
     ent:EmitSound("smashmod/smash.wav")
@@ -30,10 +29,10 @@ end
 local deathruncheck = 1
 
 local function Damage(target, info)
-    if target:IsNPC() or target:IsNextBot() or target:IsPlayer() then
-        if target:GetNWBool("shoulddie") == false then
-            local damage = info:GetDamage()
+    if target:IsPlayer() then
+        local damage = info:GetDamage()
 
+        if target:GetNWBool("shoulddie") == false then
             if damage >= 0.00 and damage < 25.00 then
                 target:EmitSound("smashmod/hit/s.mp3", 75, math.random(85, 115))
             end
@@ -47,11 +46,7 @@ local function Damage(target, info)
             end
         end
 
-        if target.IsDrGNextbot and target:IsOnGround() and GetConVar("smod_knockback"):GetFloat() > 0.00 then
-            target:SetPos(target:GetPos() + Vector(0, 0, 20))
-        end
-
-        if target:IsPlayer() and target:IsOnGround() and GetConVar("smod_knockback"):GetFloat() > 0.00 then
+        if target:IsOnGround() and GetConVar("smod_knockback"):GetFloat() > 0.00 then
             target:SetPos(target:GetPos() + Vector(0, 0, 5))
         end
 
@@ -59,10 +54,10 @@ local function Damage(target, info)
             target:SetVelocity(Vector(0, 0, target:GetNWFloat("smod_damage")))
         end
 
-        target:SetNWFloat("smod_damage", target:GetNWFloat("smod_damage") + info:GetDamage())
+        target:SetNWFloat("smod_damage", target:GetNWFloat("smod_damage") + damage)
 
         if info:GetAttacker():IsValid() then
-            if info:GetAttacker():IsPlayer() or info:GetAttacker():IsNPC() or info:GetAttacker():IsNextBot() then
+            if info:GetAttacker():IsPlayer() then
                 target:SetVelocity((Vector(0, 0, target:GetNWFloat("smod_damage")) + (-info:GetAttacker():GetAimVector() * -target:GetNWFloat("smod_damage")) * 3) * GetConVar("smod_knockback"):GetFloat())
             else
                 target:SetVelocity(Vector(0, 0, target:GetNWFloat("smod_damage")))
@@ -77,12 +72,9 @@ local function Damage(target, info)
                 target:SetNWBool("shoulddie", true)
                 info:GetAttacker():EmitSound("ko.mp3", 90)
 
-                if target.IsDrGNextbot then
-                    target:SetPos(target:GetPos() + Vector(0, 0, 20))
-                end
-
-                if info:GetAttacker():IsPlayer() or info:GetAttacker():IsNPC() or info:GetAttacker():IsNextBot() then
+                if info:GetAttacker():IsPlayer() then
                     target:SetVelocity((Vector(0, 0, target:GetNWFloat("smod_damage") * 10) + (-info:GetAttacker():GetAimVector() * -target:GetNWFloat("smod_damage")) * 10) * GetConVar("smod_knockback"):GetFloat())
+
                 else
                     target:SetVelocity(Vector(0, 0, target:GetNWFloat("smod_damage")))
                 end
@@ -97,24 +89,7 @@ local function Damage(target, info)
                         util.Effect("Explosion", effectdata)
                         DoExplosion(target:GetPos(), target)
                         target:SetNWBool("shoulddie", true)
-                        target:SetNWFloat("smod_damage", 0)
-
-                        if target:IsPlayer() then
-                            for i = 1, 40 do
-                                target:TakeDamage(99999999, attacker, attacker)
-                            end
-                        end
-
-                        if target:IsNextBot() or target:IsNPC() then
-                            for i = 1, 40 do
-                                target:TakeDamage(99999999, attacker, attacker)
-
-                                if target.IsDrGNextbot then
-                                    target:Kill(attacker)
-                                end
-                            end
-                        end
-
+                        target:Kill(attacker)
                         target:RemoveFlags(FL_NOTARGET)
                         target:Remove()
                         deathruncheck = 1
@@ -123,21 +98,23 @@ local function Damage(target, info)
             end
         end
 
-        if target:GetNWBool("shoulddie") == false then
-            return true
-        else
-            return false
+        if(info:GetAttacker():IsPlayer()) then
+            net.Start("smod.damage")
+                net.WriteEntity(target)
+                net.WriteFloat(target:GetNWFloat("smod_damage"))
+                net.WriteFloat(damage)
+            net.Send(info:GetAttacker())
         end
+
+        return target:GetNWBool("shoulddie") == false;
+    else
+        return false
     end
 end
 
 hook.Add("EntityTakeDamage", "DamageSystemSmashBros", Damage)
 
-hook.Add("PostPlayerDeath", "ResetDeathSmashBros", function(ply)
-    ply:SetNWFloat("smod_damage", 0)
-    ply:SetNWBool("shoulddie", false)
-end)
-
 hook.Add("PlayerSpawn", "PlayerSpawnSmashBros", function(ply)
     ply:SetNWBool("shoulddie", false)
+    ply:SetNWFloat("smod_damage", 0)
 end)

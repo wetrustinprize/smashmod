@@ -42,7 +42,6 @@ function HealthHUD:Hide()
 end
 
 function HealthHUD:Draw(xOffset, yOffset)
-    -- Get the variables
     -- Start hiding
     self.__hidePercentage = 
         not self.show and math.min(1, self.__hidePercentage + FrameTime() / hideSpeed) 
@@ -60,6 +59,7 @@ function HealthHUD:Draw(xOffset, yOffset)
     -- Variables to render
     local ply = self.ply
     if not ply then return 0, 0 end
+    local killAt = GetConVar("smod_killatpercent"):GetInt()
     local transparency = 1 - self.__hidePercentage
     local name = #ply:Name() > 7 and ply:Name():sub(1, 7) .. "..." or ply:Name()
     local damage = ply:GetNWFloat("smod_damage")
@@ -87,7 +87,11 @@ function HealthHUD:Draw(xOffset, yOffset)
         string.format("%0.0f", damage),
         "HealthFont", 
         xOffset, yOffset, 
-        Color(255, 255, 255, 255 * transparency), 
+        lerpColor(
+            Color(255, 255, 255, 255 * transparency), 
+            Color(255, 0, 0, 255 * transparency), 
+            math.ease.InQuint(math.min(1, damage / killAt))
+        ),
         TEXT_ALIGN_LEFT, TEXT_ALIGN_TOP, 
         3, Color(0, 0, 0, 255 * transparency)
     )
@@ -98,7 +102,11 @@ function HealthHUD:Draw(xOffset, yOffset)
         "." .. string.Right(string.format("%0.2f", damage%1), 2) .. "%",
         "HealthFontSmall",
         xOffset + bigDamageWidth, yOffset + bigDamageHeight, 
-        Color(255, 255, 255, 255 * transparency), 
+        lerpColor(
+            Color(255, 255, 255, 255 * transparency), 
+            Color(255, 0, 0, 255 * transparency), 
+            math.ease.InQuint(math.min(1, damage / killAt))
+        ),
         TEXT_ALIGN_LEFT, TEXT_ALIGN_BOTTOM, 
         3, Color(0, 0, 0, 255 * transparency)
     )

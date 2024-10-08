@@ -38,3 +38,11 @@ end
 
 -- Add crosshair hook
 hook.Add("HUDPaint", "DrawCrosshair", DrawCrosshair)
+
+net.Receive("smod.damage", function()
+    local ply = net.ReadEntity()
+    local damage = net.ReadFloat()
+    local amount = net.ReadFloat()
+
+    LocalPlayer():EmitSound("smashmod/hit.mp3", 75, math.random(85, 115))
+end)
